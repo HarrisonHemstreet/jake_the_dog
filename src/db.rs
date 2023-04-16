@@ -41,21 +41,42 @@ pub mod db {
         client
     }
 
-    // if I don't need any query params, then I can just pass &[] in place of the `query_params` param.
-    pub async fn query(query_str: &str, query_params: &[&(dyn ToSql + Sync)]) -> Vec<tokio_postgres::Row> {
+    pub struct QueryBuilder<'a> {
+        query_str: &'a str,
+        // query params are not always needed. Sometimes you just want to do a simple select * from
+        // x table.
+        query_params: Option<&'a [&'a (dyn ToSql + Sync)]>
+    }
+
+    impl<'a> QueryBuilder<'a> {
+        pub fn new(query_str: &'a str, query_params: Option<&'a [&'a (dyn ToSql + Sync)]>) -> Self {
+            Self {
+                query_str,
+                query_params
+            }
+        }
+    }
+
+    pub async fn query(query: QueryBuilder<'_>) -> Vec<tokio_postgres::Row> {
+
+        let query_params = match query.query_params {
+            Some(x) => x,
+            None => &[]
+        };
+
         let (client, connection) =
             tokio_postgres::connect("host=10.0.0.154 user=root port=5440 password=root dbname=root", NoTls).await.unwrap();
 
-        // The connection object performs the actual communication with the database,
-        // so spawn it off to run on its own.
         tokio::spawn(async move {
             if let Err(e) = connection.await {
                 eprintln!("connection error: {}", e);
             }
         });
+
         let rows = client
-            .query(query_str, query_params)
+            .query(query.query_str, query_params)
             .await.unwrap();
+
         rows
     }
 }

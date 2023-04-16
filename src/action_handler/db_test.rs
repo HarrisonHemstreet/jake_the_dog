@@ -2,6 +2,7 @@ use serde::{Serialize, Deserialize};
 use serde_json;
 use uuid::Uuid;
 use crate::db::db::query;
+use crate::db::db::QueryBuilder;
 
 pub async fn execute() -> String {
     #[derive(Serialize, Deserialize, Debug)]
@@ -9,11 +10,11 @@ pub async fn execute() -> String {
         id: Uuid
     }
 
-    let rows = query("SELECT * FROM product;", &[]).await;
+    let rows = query(QueryBuilder::new("SELECT * FROM product;", None)).await;
 
     let id: uuid::Uuid = rows[0].get(0);
     let new_id: Id = Id {id};
-    let serialized2 = serde_json::to_string(&new_id).unwrap();
+    let serialized = serde_json::to_string(&new_id).unwrap();
 
-    serialized2
+    serialized
 }
