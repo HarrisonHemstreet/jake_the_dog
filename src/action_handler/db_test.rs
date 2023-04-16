@@ -1,8 +1,8 @@
 use serde::{Serialize, Deserialize};
 use serde_json;
 use uuid::Uuid;
-use crate::db::db::query;
-use crate::db::db::QueryBuilder;
+use crate::db::query;
+use crate::db::QueryBuilder;
 
 pub async fn execute() -> String {
     #[derive(Serialize, Deserialize, Debug)]
