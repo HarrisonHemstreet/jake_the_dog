@@ -1,4 +1,6 @@
-# Purpose of this project:
+# rust-pg-webservice
+
+## Purpose of this project:
 The purpose of this project is to give newcomers to Rust a basic project to learn from, and even use to start their own projects. Starting Rust can be hard. I'm probably a slower learner than most. It has taken me much longer than I would like to admit in order for me to learn everything in these five files. I know that other people are in this position as well. I hope that this repo can serve as a basic example of how these interlocking technologies work together. I know that I probably have not implemented everything according to best practices, but I did the best with what I had. If you would like me to change anything in here, feel free to open a pull request or ask a question.
 
 ## Included technologies:
