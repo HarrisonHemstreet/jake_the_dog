@@ -1,5 +1,4 @@
 use actix_web::{get, web, Responder, dev::HttpServiceFactory};
-// use actix_web::dev::{ServiceFactory};
 use crate::action_handler;
 
 #[get("/hello/{name}")]
