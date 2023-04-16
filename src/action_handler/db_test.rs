@@ -9,7 +9,7 @@ pub async fn execute() -> String {
         id: Uuid
     }
 
-    let rows = query("SELECT * FROM product;", "").await;
+    let rows = query("SELECT * FROM product;", &[]).await;
 
     let id: uuid::Uuid = rows[0].get(0);
     let new_id: Id = Id {id};

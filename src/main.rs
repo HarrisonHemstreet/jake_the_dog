@@ -1,12 +1,9 @@
+pub mod action_handler;
 pub mod db;
 pub mod routes;
-pub mod action_handler;
 
-use std::io::Result;
-use crate::routes::greet;
-use crate::routes::db_test2;
 use actix_web::{App, HttpServer};
-
+use std::io::Result;
 
 /*
 * TODO:
@@ -15,16 +12,15 @@ use actix_web::{App, HttpServer};
 *    functionality associated with it calls an external file DONE
 * 3. make sure that I can easily make db queries in any file outside of the db connection file DONE
 * 4. look into using state w/ actix-web
+* 5. try to figure out how I can programmatically set the "service" entry for each route without
+*    having to explicitly add it each time like below
+* 6. I need to figure out how to use query params on the tokio-postgres crate
 */
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    HttpServer::new(|| {
-        App::new()
-            .service(greet)
-            .service(db_test2)
-    })
-    .bind(("127.0.0.1", 8080))?
-    .run()
-    .await
+    HttpServer::new(|| App::new().service(routes::routes()))
+        .bind(("127.0.0.1", 8080))?
+        .run()
+        .await
 }
