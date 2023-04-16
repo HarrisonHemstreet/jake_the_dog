@@ -1,4 +1,6 @@
 use tokio_postgres::{NoTls, types::ToSql};
+use dotenv::dotenv;
+use std::env;
 
 pub struct QueryBuilder<'a> {
     query_str: &'a str,
@@ -16,15 +18,36 @@ impl<'a> QueryBuilder<'a> {
     }
 }
 
+fn get_env_var(env_var: &str) -> String {
+    match env::var(env_var) {
+        Ok(val) => val,
+        Err(e) => {
+            println!("{}", e);
+            String::from("{e}")
+        },
+    }
+}
+
 pub async fn query(query: QueryBuilder<'_>) -> Vec<tokio_postgres::Row> {
+
+    dotenv().ok();
 
     let query_params = match query.query_params {
         Some(x) => x,
         None => &[]
     };
 
+    let connection_str = format!(
+        "host={} user={} port={} password={} dbname={}",
+        get_env_var("DBHOST"),
+        get_env_var("DBUSER"),
+        get_env_var("DBPORT"),
+        get_env_var("DBPASSWORD"),
+        get_env_var("DBNAME")
+    );
+
     let (client, connection) =
-        tokio_postgres::connect("host=10.0.0.154 user=root port=5440 password=root dbname=root", NoTls).await.unwrap();
+        tokio_postgres::connect(&connection_str, NoTls).await.unwrap();
 
     tokio::spawn(async move {
         if let Err(e) = connection.await {

@@ -7,10 +7,10 @@ async fn greet(name: web::Path<String>) -> impl Responder {
 }
 
 #[get("/db_test")]
-async fn db_test2() -> impl Responder {
+async fn db_test() -> impl Responder {
     action_handler::db_test::execute().await
 }
 
 pub fn routes() -> impl HttpServiceFactory {
-    (greet, db_test2)
+    (greet, db_test)
 }
