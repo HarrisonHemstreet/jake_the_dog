@@ -1,17 +1,31 @@
-CREATE TABLE "product" (
-  "id" uuid PRIMARY KEY,
-  "main_photo" varchar,
-  "title" varchar,
-  "subtitle" varchar,
-  "option" jsonb,
-  "price" int,
-  "tag" varchar,
-  "available_size" jsonb,
-  "description" varchar,
-  "product_details" varchar,
-  "FAQ" varchar,
-  "created" timestamp,
-  "lastmodified" timestamp
+CREATE TYPE variant_type AS ENUM (
+    'color',
+    'image'
+);
+
+CREATE TYPE status AS ENUM (
+    'New in',
+    'Limited Edition',
+    'Sold Out',
+    '50% Discount'
+);
+
+CREATE TABLE product (
+  id SERIAL PRIMARY KEY NOT NULL,
+  ds_name VARCHAR(50) NOT NULL,
+  vi_price FLOAT NOT NULL,
+  ds_image_url VARCHAR(50) NOT NULL,
+  ds_description VARCHAR(50) NOT NULL,
+  ds_category VARCHAR(50) NOT NULL,
+  ar_tags text[] NOT NULL,
+  ds_link VARCHAR(50) NOT NULL,
+  ar_variants text[] NOT NULL,
+  en_variant_type variant_type NOT NULL,
+  ar_sizes text[] NOT NULL,
+  ar_all_of_sizes text[] NOT NULL,
+  en_status status NOT NULL,
+  ds_rating VARCHAR(50) NOT NULL,
+  vi_number_of_reviews INTEGER NOT NULL
 );
 
 CREATE TABLE "review" (
@@ -20,6 +34,7 @@ CREATE TABLE "review" (
   "star_score" integer,
   "review_blurb" varchar,
   "created" timestamp
+  "last_modified" timestamp
 );
 
 CREATE TABLE "user_shopping_cart" (

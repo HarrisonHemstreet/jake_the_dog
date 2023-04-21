@@ -11,6 +11,15 @@ async fn db_test() -> impl Responder {
     action_handler::db_test::execute().await
 }
 
+#[get("/get_all_products")]
+async fn get_all_products() -> impl Responder {
+    action_handler::get_all_products::execute().await
+}
+
 pub fn routes() -> impl HttpServiceFactory {
-    (greet, db_test)
+    (
+        greet,
+        db_test,
+        get_all_products
+    )
 }
