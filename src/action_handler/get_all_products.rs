@@ -26,24 +26,6 @@ enum Status {
     LimitedEdition
 }
 
-/*
-fn process_status(mut status: &str) -> &str {
-    if status == "NewIn" {
-        status = "New In";
-    }
-    if status == "SoldOut" {
-        status = "Sold Out";
-    }
-    if status == "HalfOff" {
-        status = "50% Discount";
-    }
-    if status == "LimitedEdition" {
-        status = "Limited Edition";
-    }
-    status
-}
-*/
-
 pub async fn execute() -> String {
     #[derive(Serialize, Deserialize, Debug)]
     struct Product<'a> {
