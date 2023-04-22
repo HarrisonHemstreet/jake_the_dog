@@ -13,3 +13,6 @@ async fn main() -> Result<()> {
         .await
 }
 
+/*
+* 1. I need to figure out how to work with query params better
+*/

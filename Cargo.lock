@@ -923,6 +923,20 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f162c6dd7b008981e4d40210aca20b4bd0f9b60ca9271061b07f78537722f2e1"
 
 [[package]]
+name = "rust-pg-webservice"
+version = "0.1.0"
+dependencies = [
+ "actix-web",
+ "dotenv",
+ "postgres-types",
+ "serde",
+ "serde_json",
+ "tokio",
+ "tokio-postgres",
+ "uuid",
+]
+
+[[package]]
 name = "rustc_version"
 version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1196,20 +1210,6 @@ dependencies = [
  "socket2 0.5.2",
  "tokio",
  "tokio-util",
-]
-
-[[package]]
-name = "tokio-postgres-test"
-version = "0.1.0"
-dependencies = [
- "actix-web",
- "dotenv",
- "postgres-types",
- "serde",
- "serde_json",
- "tokio",
- "tokio-postgres",
- "uuid",
 ]
 
 [[package]]
