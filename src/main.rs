@@ -4,6 +4,7 @@ use std::io::Result;
 pub mod action_handler;
 pub mod db;
 pub mod routes;
+pub mod data_types;
 
 #[tokio::main]
 async fn main() -> Result<()> {

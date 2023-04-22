@@ -1,53 +1,6 @@
-use serde::{Serialize, Deserialize};
-use postgres_types::{FromSql, ToSql};
 use crate::db::query;
 use crate::db::QueryBuilder;
-
-#[derive(Debug, PartialEq, FromSql, ToSql, Serialize, Deserialize)]
-#[postgres(name = "variant_type")]
-enum VariantType {
-    #[postgres(name = "color")]
-    Color,
-    #[postgres(name = "image")]
-    Image
-}
-
-#[derive(Debug, PartialEq, FromSql, ToSql, Serialize, Deserialize)]
-#[postgres(name = "status")]
-enum Status {
-    #[postgres(name = "New in")]
-    NewIn,
-    #[postgres(name = "Sold Out")]
-    SoldOut,
-    #[postgres(name = "50% Discount")]
-    HalfOff,
-    #[postgres(name = "Limited Edition")]
-    LimitedEdition
-}
-
-#[derive(Serialize, Deserialize, Debug)]
-struct Product<'a> {
-    id: i32,
-    ds_name: &'a str,
-    vi_price: f64,
-    ds_image_url: &'a str,
-    ds_description: &'a str,
-    ds_category: &'a str,
-    ar_tags: Vec<&'a str>,
-    ds_link: &'a str,
-    ar_variants: Vec<&'a str>,
-    en_variant_type: VariantType,
-    ar_sizes: Vec<&'a str>,
-    ar_all_of_sizes: Vec<&'a str>,
-    en_status: Status,
-    ds_rating: &'a str,
-    vi_number_of_reviews: i32
-}
-
-#[derive(Serialize, Debug)]
-struct Return<'a> {
-    data: Vec<Product<'a>>
-}
+use crate::data_types::structs::{Product, Return};
 
 pub async fn execute() -> String {
     let mut data = vec![];
