@@ -3,20 +3,20 @@ use crate::db::query;
 use crate::db::QueryBuilder;
 use crate::data_types::structs::{NewProduct, Status, VariantType};
 
-pub async fn execute(new_product: Json<NewProduct>) -> String {
+pub async fn execute(new_product: Json<NewProduct>) {
 
-    let ds_name = &new_product.ds_name;
+    let ds_name: &String = &new_product.ds_name;
     let vi_price: &f64 = &new_product.vi_price;
-    let ds_image_url = &new_product.ds_image_url;
-    let ds_description = &new_product.ds_description;
-    let ds_category = &new_product.ds_category;
-    let ar_tags = &new_product.ar_tags;
-    let ds_link = &new_product.ds_link;
-    let ar_variants = &new_product.ar_variants;
-    let ar_sizes = &new_product.ar_sizes;
-    let ar_all_of_sizes = &new_product.ar_all_of_sizes;
-    let ds_rating = &new_product.ds_rating;
-    let vi_number_of_reviews = &new_product.vi_number_of_reviews;
+    let ds_image_url: &String = &new_product.ds_image_url;
+    let ds_description: &String = &new_product.ds_description;
+    let ds_category: &String = &new_product.ds_category;
+    let ar_tags: &Vec<String> = &new_product.ar_tags;
+    let ds_link: &String = &new_product.ds_link;
+    let ar_variants: &Vec<String> = &new_product.ar_variants;
+    let ar_sizes: &Vec<String> = &new_product.ar_sizes;
+    let ar_all_of_sizes: &Vec<String> = &new_product.ar_all_of_sizes;
+    let ds_rating: &String = &new_product.ds_rating;
+    let vi_number_of_reviews: &i32 = &new_product.vi_number_of_reviews;
 
     let en_variant_type: VariantType = match &new_product.en_variant_type[..] {
         "Color" => VariantType::Color,
@@ -68,6 +68,4 @@ pub async fn execute(new_product: Json<NewProduct>) -> String {
         &ds_rating,
         &vi_number_of_reviews
     ]))).await;
-
-    serde_json::to_string("{'status': 'done'}").unwrap()
 }

@@ -1,4 +1,4 @@
-use actix_web::{get, post, web, Responder, dev::HttpServiceFactory};
+use actix_web::{get, post, http, web, Responder, dev::HttpServiceFactory, HttpResponse};
 use actix_web::web::Json;
 use crate::action_handler;
 use crate::data_types::structs::{Id, NewProduct};
@@ -10,18 +10,28 @@ async fn greet(name: web::Path<String>) -> impl Responder {
 
 #[get("/products")]
 async fn get_all_products() -> impl Responder {
-    action_handler::get_all_products::execute().await
+    let res = action_handler::get_all_products::execute().await;
+    HttpResponse::Ok()
+        .status(http::StatusCode::OK)
+        .content_type("application/json")
+        .body(res)
 }
 
 #[get("/product")]
-async fn get_product_by_id(id: Json<Id>) -> impl Responder {
-    action_handler::get_product_by_id::execute(id).await
+async fn get_product_by_id(id: Json<Id>) -> HttpResponse {
+    let res = action_handler::get_product_by_id::execute(id).await;
+    HttpResponse::Ok()
+        .status(http::StatusCode::OK)
+        .content_type("application/json")
+        .body(res)
 }
 
 #[post("/product")]
-async fn create_new_product(product: Json<NewProduct>) -> impl Responder {
-    // should create a product
-    action_handler::create_new_product::execute(product).await
+async fn create_new_product(product: Json<NewProduct>) -> HttpResponse {
+    action_handler::create_new_product::execute(product).await;
+    HttpResponse::Created()
+        .status(http::StatusCode::CREATED)
+        .finish()
 }
 
 /*
