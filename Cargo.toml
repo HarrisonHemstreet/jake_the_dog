@@ -1,5 +1,5 @@
 [package]
-name = "rust-pg-webservice"
+name = "tokio-postgres-test"
 version = "0.1.0"
 edition = "2021"
 

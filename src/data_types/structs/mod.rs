@@ -21,6 +21,24 @@ pub struct Product<'a> {
 }
 
 #[derive(Serialize, Deserialize, Debug)]
+pub struct NewProduct {
+    pub ds_name: String,
+    pub vi_price: f64,
+    pub ds_image_url: String,
+    pub ds_description: String,
+    pub ds_category: String,
+    pub ar_tags: Vec<String>,
+    pub ds_link: String,
+    pub ar_variants: Vec<String>,
+    pub en_variant_type: String,
+    pub ar_sizes: Vec<String>,
+    pub ar_all_of_sizes: Vec<String>,
+    pub en_status: String,
+    pub ds_rating: String,
+    pub vi_number_of_reviews: i32
+}
+
+#[derive(Serialize, Deserialize, Debug)]
 pub struct Id {
     pub id: i32
 }
@@ -28,22 +46,22 @@ pub struct Id {
 #[derive(Debug, PartialEq, FromSql, ToSql, Serialize, Deserialize)]
 #[postgres(name = "variant_type")]
 pub enum VariantType {
-    #[postgres(name = "color")]
+    #[postgres(name = "Color")]
     Color,
-    #[postgres(name = "image")]
+    #[postgres(name = "Image")]
     Image
 }
 
 #[derive(Debug, PartialEq, FromSql, ToSql, Serialize, Deserialize)]
 #[postgres(name = "status")]
 pub enum Status {
-    #[postgres(name = "New in")]
+    #[postgres(name = "NewIn")]
     NewIn,
-    #[postgres(name = "Sold Out")]
+    #[postgres(name = "SoldOut")]
     SoldOut,
-    #[postgres(name = "50% Discount")]
+    #[postgres(name = "HalfOff")]
     HalfOff,
-    #[postgres(name = "Limited Edition")]
+    #[postgres(name = "LimitedEdition")]
     LimitedEdition
 }
 

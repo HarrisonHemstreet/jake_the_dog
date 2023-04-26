@@ -1,13 +1,13 @@
 CREATE TYPE variant_type AS ENUM (
-    'color',
-    'image'
+    'Color',
+    'Image'
 );
 
 CREATE TYPE status AS ENUM (
-    'New in',
-    'Limited Edition',
-    'Sold Out',
-    '50% Discount'
+    'NewIn',
+    'LimitedEdition',
+    'SoldOut',
+    'HalfOff'
 );
 
 CREATE TABLE product (
@@ -37,6 +37,26 @@ INSERT INTO
     179.99,
     'https://i.imgur.com/RShKXkx.jpeg',
     'The Air Jordan 1 Retro High remakes the classic sneaker, giving you a fresh look with a familiar feel. Premium materials with new colors and textures give modern expression to an all-time favorite.',
+    'shoes',
+    ARRAY['shoes', 'feet', 'Michael Jordan'],
+    'localhost:3000/',
+    ARRAY['green', 'black', 'purple'],
+    'Color',
+    ARRAY['M 13 / W 14.5', 'M 9 / W 10.5'],
+    ARRAY['M 13 / W 14.5', 'M 9 / W 10.5', 'M 10.5 / W 12'],
+    'NewIn',
+    '4.9',
+    37
+  );
+
+INSERT INTO
+  product
+    (ds_name, vi_price, ds_image_url, ds_description, ds_category, ar_tags, ds_link, ar_variants, en_variant_type, ar_sizes, ar_all_of_sizes, en_status, ds_rating, vi_number_of_reviews)
+  values (
+    'Air Jordan III',
+    209.99,
+    'https://i.imgur.com/iXQ4UXH.jpeg',
+    'Elevate your sneaker game with Air Jordan 3. Designed for comfort and style, the iconic silhouette is a must-have for any sneakerhead.',
     'shoes',
     ARRAY['shoes', 'feet', 'Michael Jordan'],
     'localhost:3000/',
