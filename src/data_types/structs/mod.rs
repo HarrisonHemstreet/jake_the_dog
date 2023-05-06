@@ -69,3 +69,10 @@ pub enum Status {
 pub struct Return<'a> {
     pub data: Vec<Product<'a>>
 }
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct ProductUpdate {
+    pub col_name: String,
+    pub value_to_update: String,
+    pub id: i32
+}

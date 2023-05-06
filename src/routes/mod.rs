@@ -1,7 +1,7 @@
-use actix_web::{get, post, http, web, Responder, dev::HttpServiceFactory, HttpResponse};
+use actix_web::{get, post, put, http, web, Responder, dev::HttpServiceFactory, HttpResponse};
 use actix_web::web::Json;
 use crate::action_handler;
-use crate::data_types::structs::{Id, NewProduct};
+use crate::data_types::structs::{Id, NewProduct, ProductUpdate};
 
 #[get("/hello/{name}")]
 async fn greet(name: web::Path<String>) -> impl Responder {
@@ -34,13 +34,17 @@ async fn create_new_product(product: Json<NewProduct>) -> HttpResponse {
         .finish()
 }
 
+#[put("/product")]
+async fn update_product(product_update: Json<ProductUpdate>) -> HttpResponse {
+    // should update a product
+    action_handler::update_product::execute(product_update).await;
+    HttpResponse::Ok()
+        .status(http::StatusCode::OK)
+        .finish()
+}
+
 /*
 TODO:
-#[put("/product")]
-async fn get_all_products() -> impl Responder {
-    // should update a product
-    action_handler::get_all_products::execute().await
-}
 #[delete("/product")]
 async fn get_all_products() -> impl Responder {
     // should delete a product
@@ -53,7 +57,8 @@ pub fn routes() -> impl HttpServiceFactory {
         greet,
         get_all_products,
         get_product_by_id,
-        create_new_product
+        create_new_product,
+        update_product,
     )
 }
 /*

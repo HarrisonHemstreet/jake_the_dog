@@ -12,8 +12,12 @@ async fn main() -> Result<()> {
         .bind(("127.0.0.1", 8080))?
         .run()
         .await
+        .expect("\nERROR: src/main.rs: server initialization fail\n");
+
+        Ok(())
 }
 
 /*
 * 1. I need to figure out how to work with query params better
+* 2. I need to add error handling
 */
