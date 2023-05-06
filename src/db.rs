@@ -28,7 +28,7 @@ fn get_env_var(env_var: &str) -> String {
     }
 }
 
-pub async fn query(query: QueryBuilder<'_>) -> Vec<tokio_postgres::Row> {
+pub async fn query(query: QueryBuilder<'_>) -> Result<Vec<tokio_postgres::Row>, ()> {
 
     dotenv().ok();
 
@@ -59,5 +59,5 @@ pub async fn query(query: QueryBuilder<'_>) -> Vec<tokio_postgres::Row> {
         .query(query.query_str, query_params)
         .await.unwrap();
 
-    rows
+    Ok(rows)
 }

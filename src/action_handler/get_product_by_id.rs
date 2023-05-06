@@ -6,7 +6,7 @@ use crate::data_types::structs::{Id, Product, Return};
 pub async fn execute(id: Json<Id>) -> String {
     let mut data = vec![];
 
-    let row = query(QueryBuilder::new("SELECT * FROM product WHERE id = $1 LIMIT 1;", Some(&[&id.id]))).await;
+    let row = query(QueryBuilder::new("SELECT * FROM product WHERE id = $1 LIMIT 1;", Some(&[&id.id]))).await.unwrap();
 
     data.push(Product {
         id: row[0].get(0),

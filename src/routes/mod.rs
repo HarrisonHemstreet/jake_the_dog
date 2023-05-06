@@ -1,7 +1,7 @@
-use actix_web::{get, post, put, http, web, Responder, dev::HttpServiceFactory, HttpResponse};
+use actix_web::{get, post, put, delete, http, web, Responder, dev::HttpServiceFactory, HttpResponse};
 use actix_web::web::Json;
 use crate::action_handler;
-use crate::data_types::structs::{Id, NewProduct, ProductUpdate};
+use crate::data_types::structs::{Id, NewProduct, ProductIdentifier};
 
 #[get("/hello/{name}")]
 async fn greet(name: web::Path<String>) -> impl Responder {
@@ -35,22 +35,20 @@ async fn create_new_product(product: Json<NewProduct>) -> HttpResponse {
 }
 
 #[put("/product")]
-async fn update_product(product_update: Json<ProductUpdate>) -> HttpResponse {
-    // should update a product
+async fn update_product(product_update: Json<ProductIdentifier>) -> HttpResponse {
     action_handler::update_product::execute(product_update).await;
     HttpResponse::Ok()
         .status(http::StatusCode::OK)
         .finish()
 }
 
-/*
-TODO:
 #[delete("/product")]
-async fn get_all_products() -> impl Responder {
-    // should delete a product
-    action_handler::get_all_products::execute().await
+async fn delete_product_by_id(id: Json<Id>) -> impl Responder {
+    action_handler::delete_product_by_id::execute(id).await;
+    HttpResponse::Ok()
+        .status(http::StatusCode::OK)
+        .finish()
 }
-*/
 
 pub fn routes() -> impl HttpServiceFactory {
     (
@@ -59,9 +57,6 @@ pub fn routes() -> impl HttpServiceFactory {
         get_product_by_id,
         create_new_product,
         update_product,
+        delete_product_by_id
     )
 }
-/*
-* 1. create some basic post, update, delete requests on product now. I want to make sure I am
-*    making ACID apis (i think that's the term?)
-*/

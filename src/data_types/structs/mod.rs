@@ -71,8 +71,15 @@ pub struct Return<'a> {
 }
 
 #[derive(Serialize, Deserialize, Debug)]
-pub struct ProductUpdate {
+pub enum ColumnValue {
+    Integer(i32),
+    Float(f64),
+    Text(String),
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct ProductIdentifier {
     pub col_name: String,
-    pub value_to_update: String,
-    pub id: i32
+    pub col_value: ColumnValue,
+    pub id: Option<i32>
 }

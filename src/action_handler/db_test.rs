@@ -4,7 +4,7 @@ use crate::db::QueryBuilder;
 use crate::data_types::structs::Id;
 
 pub async fn execute() -> String {
-    let rows = query(QueryBuilder::new("SELECT * FROM product;", None)).await;
+    let rows = query(QueryBuilder::new("SELECT * FROM product;", None)).await.unwrap();
 
     let id: i32 = rows[0].get(0);
     let new_id: Id = Id {id};
