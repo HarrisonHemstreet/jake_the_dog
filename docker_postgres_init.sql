@@ -61,10 +61,10 @@ INSERT INTO
     ARRAY['shoes', 'feet', 'Michael Jordan'],
     'localhost:3000/',
     ARRAY['green', 'black', 'purple'],
-    'color',
+    'Color',
     ARRAY['M 13 / W 14.5', 'M 9 / W 10.5'],
     ARRAY['M 13 / W 14.5', 'M 9 / W 10.5', 'M 10.5 / W 12'],
-    'New in',
+    'NewIn',
     '4.9',
     37
   );
