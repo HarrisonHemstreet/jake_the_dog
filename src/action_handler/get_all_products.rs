@@ -1,11 +1,10 @@
-use crate::db::query;
-use crate::db::QueryBuilder;
+use crate::db::get_all;
 use crate::data_types::structs::{Product, Return};
 
 pub async fn execute() -> String {
     let mut data = vec![];
 
-    let rows = query(QueryBuilder::new("SELECT * FROM product;", None)).await.unwrap();
+    let rows = get_all("product").await;
     
     let mut i: usize = 0;
     loop {

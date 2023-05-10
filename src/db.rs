@@ -62,7 +62,7 @@ pub async fn query(query: QueryBuilder<'_>) -> Result<Vec<tokio_postgres::Row>, 
     Ok(rows)
 }
 
-pub async fn insert(table: &str, columns: Vec<&str>, values: Option<& [& (dyn ToSql + Sync)]>) -> Result<Vec<tokio_postgres::Row>, ()> {
+pub async fn insert(table: &str, columns: Vec<&str>, values: Option<& [& (dyn ToSql + Sync)]>) -> Vec<tokio_postgres::Row> {
     let mut columns_string: String = String::from("");
     let mut values_string: String = String::from("");
     for (index, column) in columns.iter().enumerate() {
@@ -72,5 +72,10 @@ pub async fn insert(table: &str, columns: Vec<&str>, values: Option<& [& (dyn To
     let new_columns_string: String = columns_string.chars().skip(2).collect();
     let new_values_string: String = values_string.chars().skip(2).collect();
     let query_string = format!("INSERT INTO {} ({}) VALUES ({})", table, new_columns_string, new_values_string);
-    query(QueryBuilder::new(&query_string, values)).await
+    query(QueryBuilder::new(&query_string, values)).await.unwrap()
+}
+
+pub async fn get_all(table: &str) -> Vec<tokio_postgres::Row> {
+    let query_string: String = format!("SELECT * FROM {};", table);
+    query(QueryBuilder::new(&query_string, None)).await.unwrap()
 }

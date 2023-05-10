@@ -53,6 +53,6 @@ pub async fn execute(new_product: Json<NewProduct>) {
             &ds_rating,
             &vi_number_of_reviews
         ]
-    )).await.unwrap();
+    )).await;
 }
 
