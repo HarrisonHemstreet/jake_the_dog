@@ -61,3 +61,16 @@ pub async fn query(query: QueryBuilder<'_>) -> Result<Vec<tokio_postgres::Row>, 
 
     Ok(rows)
 }
+
+pub async fn insert(table: &str, columns: Vec<&str>, values: Option<& [& (dyn ToSql + Sync)]>) -> Result<Vec<tokio_postgres::Row>, ()> {
+    let mut columns_string: String = String::from("");
+    let mut values_string: String = String::from("");
+    for (index, column) in columns.iter().enumerate() {
+        columns_string = format!("{columns_string}, {column}");
+        values_string = format!("{values_string}, ${}", index + 1);
+    }
+    let new_columns_string: String = columns_string.chars().skip(2).collect();
+    let new_values_string: String = values_string.chars().skip(2).collect();
+    let query_string = format!("INSERT INTO {} ({}) VALUES ({})", table, new_columns_string, new_values_string);
+    query(QueryBuilder::new(&query_string, values)).await
+}

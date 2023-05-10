@@ -1,6 +1,5 @@
 use actix_web::web::Json;
-use crate::db::query;
-use crate::db::QueryBuilder;
+use crate::db::insert;
 use crate::data_types::structs::{NewProduct, Status, VariantType};
 
 pub async fn execute(new_product: Json<NewProduct>) {
@@ -30,42 +29,30 @@ pub async fn execute(new_product: Json<NewProduct>) {
         _ => Status::LimitedEdition
     };
 
-    let query_string: String = String::from("
-        INSERT INTO
-            product
-                (
-                    ds_name,
-                    vi_price,
-                    ds_image_url,
-                    ds_description,
-                    ds_category,
-                    ar_tags,
-                    ds_link,
-                    ar_variants,
-                    en_variant_type,
-                    ar_sizes,
-                    ar_all_of_sizes,
-                    en_status,
-                    ds_rating,
-                    vi_number_of_reviews
-                )
-            values
-                ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14);");
-
-    query(QueryBuilder::new(&query_string, Some(&[
-        &ds_name,
-        &vi_price,
-        &ds_image_url,
-        &ds_description,
-        &ds_category,
-        &ar_tags,
-        &ds_link,
-        &ar_variants,
-        &en_variant_type,
-        &ar_sizes,
-        &ar_all_of_sizes,
-        &en_status,
-        &ds_rating,
-        &vi_number_of_reviews
-    ]))).await.unwrap();
+    insert("product",
+        vec![
+            "ds_name", "vi_price", "ds_image_url",
+            "ds_description", "ds_category", "ar_tags",
+            "ds_link", "ar_variants", "en_variant_type",
+            "ar_sizes", "ar_all_of_sizes", "en_status",
+            "ds_rating", "vi_number_of_reviews"
+        ],
+        Some(&[
+            &ds_name,
+            &vi_price,
+            &ds_image_url,
+            &ds_description,
+            &ds_category,
+            &ar_tags,
+            &ds_link,
+            &ar_variants,
+            &en_variant_type,
+            &ar_sizes,
+            &ar_all_of_sizes,
+            &en_status,
+            &ds_rating,
+            &vi_number_of_reviews
+        ]
+    )).await.unwrap();
 }
+
