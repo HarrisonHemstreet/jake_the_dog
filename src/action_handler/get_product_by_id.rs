@@ -1,12 +1,12 @@
 use actix_web::web::Json;
-use crate::db::query;
-use crate::db::QueryBuilder;
+use crate::db::get;
+// use crate::db::QueryBuilder;
 use crate::data_types::structs::{Id, Product, Return};
 
 pub async fn execute(id: Json<Id>) -> String {
     let mut data = vec![];
 
-    let row = query(QueryBuilder::new("SELECT * FROM product WHERE id = $1 LIMIT 1;", Some(&[&id.id]))).await.unwrap();
+    let row = get("product", None, vec!["id"], Some(&[&id.id])).await;
 
     data.push(Product {
         id: row[0].get(0),
