@@ -80,25 +80,37 @@ pub async fn get_all(table: &str) -> Vec<tokio_postgres::Row> {
     query(QueryBuilder::new(&query_string, None)).await.unwrap()
 }
 
-pub async fn get(table: &str, columns: Option<Vec<&str>>, where_columns: Vec<&str>, where_values: Option<& [& (dyn ToSql + Sync)]>) -> Vec<tokio_postgres::Row> {
+pub async fn get(table: &str, columns: Option<Vec<&str>>, where_columns: Option<Vec<&str>>, where_values: Option<& [& (dyn ToSql + Sync)]>) -> Vec<tokio_postgres::Row> {
     let mut columns_string: String = String::from("");
     let mut values_string: String = String::from("");
     let new_columns = match columns {
         Some(x) => x,
         None => vec!["*"]
     };
+
     for (index, column) in new_columns.iter().enumerate() {
         columns_string = format!("{columns_string}, {}", column);
         values_string = format!("{values_string}, ${}", index + 1);
     }
-    let new_columns_string: String = columns_string.chars().skip(2).collect();
-    let mut where_string: String = String::from("");
 
-    for (index, column) in where_columns.iter().enumerate() {
-        where_string = format!("{where_string} {} = ${}, ", column, index + 1);
+    let new_columns_string: String = columns_string.chars().skip(2).collect();
+    let mut where_string: String = String::new();
+
+    if let Some(x) = where_columns {
+        for (index, column) in x.iter().enumerate() {
+            where_string.push_str(&format!("{} = ${}, ", column, index + 1));
+        }
     }
 
     let new_where_string = where_string.get(..where_string.len() - 2).unwrap_or("");
-    let query_string = format!("SELECT {} FROM {} WHERE{};", new_columns_string, table, new_where_string);
+    let query_string = format!("SELECT {} FROM {} WHERE {};", new_columns_string, table, new_where_string);
     query(QueryBuilder::new(&query_string, where_values)).await.unwrap()
 }
+
+// pub async fn delete(table: &str, where_columns: Vec<&str>, where_values: Option<& [& (dyn ToSql + Sync)]>) -> Vec<tokio_postgres::Row> {
+//     // let 
+//     let new_columns 
+//     let mut query_string = format!("DELETE FROM {table} WHERE {}");
+//     // let mut where_values = String::from("");
+//     query(QueryBuilder::new(&query_string, where_values)).await.unwrap()
+// }

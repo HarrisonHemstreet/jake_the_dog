@@ -6,7 +6,7 @@ use crate::data_types::structs::{Id, Product, Return};
 pub async fn execute(id: Json<Id>) -> String {
     let mut data = vec![];
 
-    let row = get("product", None, vec!["id"], Some(&[&id.id])).await;
+    let row = get("product", None, Some(vec!["id"]), Some(&[&id.id])).await;
 
     data.push(Product {
         id: row[0].get(0),
