@@ -107,10 +107,14 @@ pub async fn get(table: &str, columns: Option<Vec<&str>>, where_columns: Option<
     query(QueryBuilder::new(&query_string, where_values)).await.unwrap()
 }
 
-// pub async fn delete(table: &str, where_columns: Vec<&str>, where_values: Option<& [& (dyn ToSql + Sync)]>) -> Vec<tokio_postgres::Row> {
-//     // let 
-//     let new_columns 
-//     let mut query_string = format!("DELETE FROM {table} WHERE {}");
-//     // let mut where_values = String::from("");
-//     query(QueryBuilder::new(&query_string, where_values)).await.unwrap()
-// }
+pub async fn delete(table: &str, where_columns: Option<Vec<&str>>, where_values: Option<& [& (dyn ToSql + Sync)]>) -> Vec<tokio_postgres::Row> {
+    let mut where_string: String = String::new();
+    if let Some(x) = where_columns {
+        for (index, column) in x.iter().enumerate() {
+            where_string.push_str(&format!("{} = ${}, ", column, index + 1));
+        }
+    }
+    let mut query_string = format!("DELETE FROM {table} WHERE {}", where_string);
+    query_string = query_string.trim_end_matches(", ").to_string();
+    query(QueryBuilder::new(&query_string, where_values)).await.unwrap()
+}
