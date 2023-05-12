@@ -9,11 +9,12 @@ pub mod data_types;
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    bt("main.rs: line: 12:");
-    bt("Todo:
-        1. Make functions that can take all four CRUD opperations
-        2. 
-    ");
+bt("
+main.rs: line: 12:
+Todo:
+1. Make functions that can take all four CRUD opperations
+2. 
+");
     HttpServer::new(|| App::new().service(routes::routes()))
         .bind(("127.0.0.1", 8080))?
         .run()
