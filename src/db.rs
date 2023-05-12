@@ -122,17 +122,15 @@ pub async fn delete(table: &str, where_columns: Option<Vec<&str>>, where_values:
 pub async fn update(
     table: &str,
     set_columns: Option<Vec<&str>>,
-    // set_values: Option<& [& (dyn ToSql + Sync)]>,
     where_columns: Option<Vec<&str>>,
-    // where_values: Option<& [& (dyn ToSql + Sync)]>,
     values: Option<&[& (dyn ToSql + Sync)]>
 ) -> Vec<tokio_postgres::Row> {
     let mut set_string: String = String::new();
 
     let mut query_string = format!("UPDATE {}", table);
-    // let query_string = format!("UPDATE {} SET {} WHERE {};", new_columns_string, table, new_where_string);
     let mut counter: i32 = 0;
     if let Some(x) = set_columns {
+        // remove this unused variable or remove this warning
         for (index, column) in x.iter().enumerate() {
             set_string.push_str(&format!("{}", column));
             counter += 1;
@@ -142,11 +140,10 @@ pub async fn update(
     set_string = set_string.trim_end_matches(", ").to_string();
     query_string = format!("{query_string} SET {}", set_string);
 
-    //-------------------------
-
     let mut where_string: String = String::new();
 
     if let Some(x) = where_columns {
+        // remove this unused variable or remove this warning
         for (index, column) in x.iter().enumerate() {
             where_string.push_str(&format!("{}", column));
             counter += 1;
@@ -156,12 +153,5 @@ pub async fn update(
     where_string = where_string.trim_end_matches(", ").to_string();
     query_string = format!("{query_string} WHERE {}", where_string);
 
-    println!("query_string: {query_string}");
-
-    // panic!();
-
-    // let new_where_string = where_string.get(..where_string.len() - 2).unwrap_or("");
-    // let query_string = format!("UPDATE {} SET {} WHERE {};", new_columns_string, table, new_where_string);
     query(QueryBuilder::new(&query_string, values)).await.unwrap()
-    // query(QueryBuilder::new(&query_string, where_values)).await.unwrap()
 }
