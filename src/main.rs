@@ -12,8 +12,9 @@ async fn main() -> Result<()> {
 bt("
 main.rs: line: 12:
 Todo:
-1. Make functions that can take all four CRUD opperations
-2. 
+1. Think about ways I can improve this server. Maybe I can add authentication or something like that
+2. clean this whole project up. get it ready for submitting to some larger repo as an example
+
 ");
     HttpServer::new(|| App::new().service(routes::routes()))
         .bind(("127.0.0.1", 8080))?
