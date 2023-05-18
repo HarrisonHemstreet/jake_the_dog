@@ -3,6 +3,7 @@ use std::io::Result;
 use better_todos::better_todo as bt;
 
 pub mod action_handler;
+pub mod action_handler2;
 pub mod db;
 pub mod routes;
 pub mod data_types;

@@ -1,6 +1,7 @@
 use actix_web::{get, post, put, delete, http, web, Responder, dev::HttpServiceFactory, HttpResponse};
 use actix_web::web::Json;
 use crate::action_handler;
+use crate::action_handler2;
 use crate::data_types::structs::{Id, NewProduct, ProductIdentifier};
 
 #[get("/hello/{name}")]
@@ -11,6 +12,15 @@ async fn greet(name: web::Path<String>) -> impl Responder {
 #[get("/products")]
 async fn get_all_products() -> impl Responder {
     let res = action_handler::get_all_products::execute().await;
+    HttpResponse::Ok()
+        .status(http::StatusCode::OK)
+        .content_type("application/json")
+        .body(res)
+}
+
+#[get("/products2")]
+async fn get_all_products2() -> impl Responder {
+    let res = action_handler2::get_all_products::execute().await;
     HttpResponse::Ok()
         .status(http::StatusCode::OK)
         .content_type("application/json")
@@ -54,6 +64,7 @@ pub fn routes() -> impl HttpServiceFactory {
     (
         greet,
         get_all_products,
+        get_all_products2,
         get_product_by_id,
         create_new_product,
         update_product,
