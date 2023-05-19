@@ -68,3 +68,17 @@ INSERT INTO
     '4.9',
     37
   );
+
+CREATE TABLE api_key (
+  id SERIAL PRIMARY KEY NOT NULL,
+  name VARCHAR(50) NOT NULL,
+  api_key VARCHAR NOT NULL
+);
+
+INSERT INTO
+  api_key
+    (name, api_key)
+  VALUES (
+    'Harrison Hemstreet',
+    (SELECT gen_random_uuid())
+  );
