@@ -34,3 +34,6 @@ The purpose of this project is to give newcomers to Rust a basic project to lear
 wiki: https://adventuretime.fandom.com/wiki/Jake
 
 I chose Jake to be the mascot of this project, because Jake is the most dependable friend a person could have. Jake is also very flexible. Flexibility and dependability are two abilities I look for in a webserver.
+
+## Crates.io
+https://crates.io/crates/jake_the_dog
