@@ -12,8 +12,7 @@ async fn main() -> Result<()> {
 bt("
 main.rs: line: 12:
 Todo:
-1. Think about ways I can improve this server. Maybe I can add authentication or something like that
-2. clean this whole project up. get it ready for submitting to some larger repo as an example
+1. add authentication. maybe the oauth2 crate? or oauth2 in general? or maybe I leave authentication up to the frontend? idk
 
 ");
     HttpServer::new(|| App::new().service(routes::routes()))
