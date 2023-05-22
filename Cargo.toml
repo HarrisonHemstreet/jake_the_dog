@@ -2,7 +2,7 @@
 name = "jake_the_dog"
 version = "1.0.0"
 edition = "2021"
-author = "Harrison Hemstreet"
+authors = ["Harrison Hemstreet"]
 description = "jake_the_dog is a skeleton project that you can use to start a basic webserver using Rust and PostgreSQL"
 repository = "https://github.com/HarrisonHemstreet/jake_the_dog"
 license = "MIT OR Apache-2.0"
