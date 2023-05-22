@@ -623,6 +623,21 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "453ad9f582a441959e5f0d088b02ce04cfe8d51a8eaf077f12ac6d3e94164ca6"
 
 [[package]]
+name = "jake_the_dog"
+version = "1.0.0"
+dependencies = [
+ "actix-web",
+ "better_todos",
+ "dotenv",
+ "postgres-types",
+ "serde",
+ "serde_json",
+ "tokio",
+ "tokio-postgres",
+ "uuid",
+]
+
+[[package]]
 name = "jobserver"
 version = "0.1.26"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1214,21 +1229,6 @@ dependencies = [
  "socket2 0.5.2",
  "tokio",
  "tokio-util",
-]
-
-[[package]]
-name = "tokio-postgres-test"
-version = "0.1.0"
-dependencies = [
- "actix-web",
- "better_todos",
- "dotenv",
- "postgres-types",
- "serde",
- "serde_json",
- "tokio",
- "tokio-postgres",
- "uuid",
 ]
 
 [[package]]

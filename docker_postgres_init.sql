@@ -69,16 +69,17 @@ INSERT INTO
     37
   );
 
-CREATE TABLE api_key (
-  id SERIAL PRIMARY KEY NOT NULL,
-  name VARCHAR(50) NOT NULL,
-  api_key VARCHAR NOT NULL
-);
+-- TODO: Evetually implement authentication in some way
+-- CREATE TABLE api_key (
+--   id SERIAL PRIMARY KEY NOT NULL,
+--   name VARCHAR(50) NOT NULL,
+--   api_key VARCHAR NOT NULL
+-- );
 
-INSERT INTO
-  api_key
-    (name, api_key)
-  VALUES (
-    'Harrison Hemstreet',
-    (SELECT gen_random_uuid())
-  );
+-- INSERT INTO
+--   api_key
+--     (name, api_key)
+--   VALUES (
+--     'Harrison Hemstreet',
+--     (SELECT gen_random_uuid())
+--   );

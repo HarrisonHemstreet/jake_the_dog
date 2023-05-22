@@ -65,9 +65,9 @@ pub async fn query(query: QueryBuilder<'_>) -> Result<Vec<tokio_postgres::Row>, 
 pub async fn insert(table: &str, columns: Vec<&str>, values: Option<& [& (dyn ToSql + Sync)]>) -> Vec<tokio_postgres::Row> {
     let mut columns_string: String = String::from("");
     let mut values_string: String = String::from("");
-    for (index, column) in columns.iter().enumerate() {
+    for (_index, column) in columns.iter().enumerate() {
         columns_string = format!("{columns_string}, {column}");
-        values_string = format!("{values_string}, ${}", index + 1);
+        values_string = format!("{values_string}, ${}", _index + 1);
     }
     let new_columns_string: String = columns_string.chars().skip(2).collect();
     let new_values_string: String = values_string.chars().skip(2).collect();
@@ -88,17 +88,17 @@ pub async fn get(table: &str, columns: Option<Vec<&str>>, where_columns: Option<
         None => vec!["*"]
     };
 
-    for (index, column) in new_columns.iter().enumerate() {
+    for (_index, column) in new_columns.iter().enumerate() {
         columns_string = format!("{columns_string}, {}", column);
-        values_string = format!("{values_string}, ${}", index + 1);
+        values_string = format!("{values_string}, ${}", _index + 1);
     }
 
     let new_columns_string: String = columns_string.chars().skip(2).collect();
     let mut where_string: String = String::new();
 
     if let Some(x) = where_columns {
-        for (index, column) in x.iter().enumerate() {
-            where_string.push_str(&format!("{} = ${}, ", column, index + 1));
+        for (_index, column) in x.iter().enumerate() {
+            where_string.push_str(&format!("{} = ${}, ", column, _index + 1));
         }
     }
 
@@ -110,8 +110,8 @@ pub async fn get(table: &str, columns: Option<Vec<&str>>, where_columns: Option<
 pub async fn delete(table: &str, where_columns: Option<Vec<&str>>, where_values: Option<& [& (dyn ToSql + Sync)]>) -> Vec<tokio_postgres::Row> {
     let mut where_string: String = String::new();
     if let Some(x) = where_columns {
-        for (index, column) in x.iter().enumerate() {
-            where_string.push_str(&format!("{} = ${}, ", column, index + 1));
+        for (_index, column) in x.iter().enumerate() {
+            where_string.push_str(&format!("{} = ${}, ", column, _index + 1));
         }
     }
     let mut query_string = format!("DELETE FROM {table} WHERE {}", where_string);
@@ -131,7 +131,7 @@ pub async fn update(
     let mut counter: i32 = 0;
     if let Some(x) = set_columns {
         // remove this unused variable or remove this warning
-        for (index, column) in x.iter().enumerate() {
+        for (_index, column) in x.iter().enumerate() {
             set_string.push_str(&format!("{}", column));
             counter += 1;
             set_string.push_str(&format!(" = ${counter}, "))
@@ -144,7 +144,7 @@ pub async fn update(
 
     if let Some(x) = where_columns {
         // remove this unused variable or remove this warning
-        for (index, column) in x.iter().enumerate() {
+        for (_index, column) in x.iter().enumerate() {
             where_string.push_str(&format!("{}", column));
             counter += 1;
             where_string.push_str(&format!(" = ${counter}, "))
